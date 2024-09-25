@@ -24,6 +24,7 @@
         <mongodb.version>5.0.1</mongodb.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.5.0</springdoc-openapi-starter-webmvc-ui.version>
+        <jhipster-framework.version>8.7.0</jhipster-framework.version>
     </properties>
 
     <dependencies>
@@ -46,6 +47,44 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.jhipster</groupId>
+            <artifactId>jhipster-framework</artifactId>
+            <version>${jhipster-framework.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.hivemq</groupId>
+            <artifactId>hivemq-mqtt-client</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version> <!-- Thay đổi phiên bản nếu cần -->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+            <version>1.2.5</version> <!-- Sử dụng phiên bản mới nhất -->
+        </dependency>
+
+
+
+
+
+
+
+
     </dependencies>
 
     <build>
