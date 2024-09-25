@@ -54,9 +54,9 @@ public class MqttService implements CommandLineRunner {
 
             System.out.println("Connected successfully");
 
-//            client.subscribeWith()
-//                    .topicFilter("B21DCCN129/esp8266/sensor_data")
-//                    .send();
+            client.subscribeWith()
+                    .topicFilter("B21DCCN129/esp8266/sensor_data")
+                    .send();
 
             client.toAsync().publishes(ALL, publish -> handleIncomingMessage(publish));
         } catch (Exception e) {
