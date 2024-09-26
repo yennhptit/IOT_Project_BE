@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.domain.Sort;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +52,10 @@ public interface SensorDataRepository extends MongoRepository<SensorData, String
     List<SensorData> findByLightLessThanEqual(int light);
     List<SensorData> findByLightGreaterThan(int light);
     List<SensorData> findByLightLessThan(int light);
+
+
+    @Query("{ 'wind': { $lt: ?0 }, 'timeStr': { $regex: ?1 } }")
+    long countWindLessThanAndDateContains(int windSpeed, String date);
 
 
 

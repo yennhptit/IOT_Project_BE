@@ -9,11 +9,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**") // Cấu hình cho tất cả các API
+        registry.addMapping("/api/**") // Apply CORS to all API endpoints
 //                .allowedOrigins("http://127.0.0.1:3000", "http://192.168.1.102:3000") // Thêm nhiều URL
                 .allowedOrigins("*") // Cho phép tất cả các nguồn gốc
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*");
+        registry.addMapping("/ws/**")
+                .allowedOrigins("*")
+                .allowCredentials(true);
     }
 }
 

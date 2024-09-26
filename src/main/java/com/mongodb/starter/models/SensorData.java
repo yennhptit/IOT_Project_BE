@@ -40,6 +40,9 @@ public class SensorData implements Serializable {
     @Field("time")
     private LocalDateTime time;
 
+    @NotNull
+    @Field("wind")
+    private Integer wind;
 
 
 
@@ -93,6 +96,17 @@ public class SensorData implements Serializable {
         this.setTime(time);
         return this;
     }
+    public Integer getWind() {
+        return wind;
+    }
+    public SensorData wind(Integer wind) {
+        this.setWind(wind);
+        return this;
+    }
+    public void setWind(Integer wind) {
+        this.wind = wind;
+    }
+
     public void setTemperature(Integer temperature) {
         this.temperature = temperature;
     }
@@ -112,11 +126,11 @@ public class SensorData implements Serializable {
     public String toString() {
         return "SensorData{" +
             "id='" + getId() + '\'' +
-            ", temperature=" + getTemperature() +
-            ", humidity=" + getHumidity() +
-            ", light=" + getLight() +
-            ", timeStr='" + getTimeStr() + '\'' +
+            ", temperature='" + getTemperature() + '\'' +
+            ", humidity='" + getHumidity() + '\'' +
+            ", light='" + getLight() + '\'' +
             ", time='" + getTime() + '\'' +
+            ", timeStr='" + getTimeStr() + '\'' +
             "}";
     }
 

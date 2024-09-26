@@ -411,4 +411,8 @@ public class SensorDataResource {
 
         return ResponseEntity.ok(result);
     }
+    @GetMapping("/api/sensor/wind-count")
+    public long getWindCount() {
+        return sensorDataService.countWindLessThan40Today();
+    }
 }

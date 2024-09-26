@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,4 +18,8 @@ public interface ActionHistoryRepository extends MongoRepository<ActionHistory, 
     List<ActionHistory> findLatestActionByDevice(String device);
 
     List<ActionHistory> findByTimeBetween(LocalDateTime startTime, LocalDateTime endTime);
+
+    @Query("{ 'wind': { $lt: ?0 }, 'time': { $gte: ?1, $lt: ?2 } }")
+    long countWindLessThan(int windSpeed, LocalDate startDate, LocalDate endDate);
+
 }

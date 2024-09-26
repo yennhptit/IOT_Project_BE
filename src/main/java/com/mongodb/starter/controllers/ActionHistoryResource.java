@@ -200,12 +200,12 @@ public class ActionHistoryResource {
         actionHistoryRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id)).build();
     }
-    @PostMapping("/{device}/ON")
-    public ResponseEntity<String> turnOnDevice(@PathVariable String device) {
-        mqttService.sendMessage("B21DCCN129/esp8266/" + device, "on");
-        saveDeviceAction(device, "ON");
-        return ResponseEntity.ok(device + " đã bật");
-    }
+//    @PostMapping("/{device}/ON")
+//    public ResponseEntity<String> turnOnDevice(@PathVariable String device) {
+//        mqttService.sendMessage("B21DCCN129/esp8266/" + device, "ON");
+//        saveDeviceAction(device, "ON");
+//        return ResponseEntity.ok(device + " đã bật");
+//    }
 //    @PostMapping("/{device}/on")
 //    public ResponseEntity<String> turnOnDevice(@PathVariable String device) {
 //        mqttService.sendMessage("B21DCCN129/esp8266/" + device, "on");
@@ -344,6 +344,16 @@ public class ActionHistoryResource {
     private LocalDate parseDate(String dateStr) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(dateStr, formatter);
+    }
+//    @GetMapping("/count")
+//    public ResponseEntity<Long> getFanOnCount(@RequestParam String date) {
+//        LocalDate localDate = LocalDate.parse(date); // e.g., "2024-09-25"
+//        long count = actionHistoryService.countFanOnActions(localDate);
+//        return ResponseEntity.ok(count);
+//    }
+    @GetMapping("/api/fan/action-count")
+    public long getWindCount() {
+        return actionHistoryService.countFanOnActionsToday();
     }
 
 }

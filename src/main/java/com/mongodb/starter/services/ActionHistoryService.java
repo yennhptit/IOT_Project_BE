@@ -1,10 +1,16 @@
 package com.mongodb.starter.services;
 
+import com.mongodb.client.model.Filters;
 import com.mongodb.starter.models.ActionHistory;
 import com.mongodb.starter.repositories.ActionHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +19,12 @@ public class ActionHistoryService {
 
     @Autowired
     private ActionHistoryRepository actionHistoryRepository;
+    private final MongoTemplate mongoTemplate;
 
+    @Autowired
+    public ActionHistoryService(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
+    }
     public Map<String, String> getLatestActions() {
         Map<String, String> latestActions = new HashMap<>();
 
@@ -32,4 +43,24 @@ public class ActionHistoryService {
                 .map(ActionHistory::getAction)
                 .orElse("No actions available");
     }
+    public long countFanOnActionsToday() {
+        // Get the start and end of today
+        LocalDate today = LocalDate.now();
+        Date startDate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date endDate = Date.from(today.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        // Query to count documents where device is "Fan", action is "ON", and time is within today
+        return mongoTemplate.getCollection("action_history") // Replace "action_history" if your collection name is different
+                .countDocuments(Filters.and(
+                        Filters.eq("device", "Fan"),
+                        Filters.eq("action", "ON"),
+                        Filters.gte("time", startDate),
+                        Filters.lt("time", endDate)
+                ));
+    }
+//    public long countFanOnActions(LocalDate date) {
+//        LocalDateTime startOfDay = date.atStartOfDay(); // This gives you the start of the day
+//        LocalDateTime endOfDay = date.plusDays(1).atStartOfDay(); // This gives you the start of the next day
+//        return actionHistoryRepository.countFanOnActions(startOfDay, endOfDay);
+//    }
 }

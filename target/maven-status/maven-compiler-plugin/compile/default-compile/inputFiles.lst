@@ -1,9 +1,13 @@
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\ApplicationStarter.java
+H:\IOT_Project_BE\src\main\java\com\mongodb\starter\config\MqttConfig.java
+H:\IOT_Project_BE\src\main\java\com\mongodb\starter\config\SecurityConfig.java
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\config\WebConfig.java
+H:\IOT_Project_BE\src\main\java\com\mongodb\starter\config\WebSocketConfig.java
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\controllers\ActionHistoryResource.java
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\controllers\DeviceStatusResource.java
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\controllers\errors\BadRequestAlertException.java
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\controllers\errors\ErrorConstants.java
+H:\IOT_Project_BE\src\main\java\com\mongodb\starter\controllers\MessageController.java
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\controllers\SensorDataResource.java
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\dtos\ActionHistoryDTO.java
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\dtos\DeviceStatusDTO.java
@@ -17,6 +21,7 @@ H:\IOT_Project_BE\src\main\java\com\mongodb\starter\repositories\DeviceStatusRep
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\repositories\SensorDataRepository.java
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\services\ActionHistoryService.java
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\services\DeviceStatusService.java
+H:\IOT_Project_BE\src\main\java\com\mongodb\starter\services\HelloWebSocketHandler.java
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\services\MqttDeviceStatusService.java
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\services\MqttService.java
 H:\IOT_Project_BE\src\main\java\com\mongodb\starter\services\SensorDataService.java

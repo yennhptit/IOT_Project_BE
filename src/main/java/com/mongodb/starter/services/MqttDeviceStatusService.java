@@ -6,13 +6,16 @@ import com.hivemq.client.mqtt.MqttClient;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5AsyncClient;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5BlockingClient;
 import com.hivemq.client.mqtt.mqtt5.message.publish.Mqtt5Publish;
+import com.mongodb.starter.models.ActionHistory;
 import com.mongodb.starter.models.DeviceStatus;
 import com.mongodb.starter.models.SensorData;
+import com.mongodb.starter.repositories.ActionHistoryRepository;
 import com.mongodb.starter.repositories.DeviceStatusRepository;
 import com.mongodb.starter.repositories.SensorDataRepository;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
@@ -29,9 +32,15 @@ public class MqttDeviceStatusService implements CommandLineRunner {
     @Autowired
     private DeviceStatusRepository deviceStatusRepository;
 
-    private final String host = "362ad76d24a14b5b9943c3bea23ab581.s1.eu.hivemq.cloud";
+    @Autowired
+    private ActionHistoryRepository actionHistoryRepository;
+
+    private final String host = "5268996a427b4742bc30f7ec3ea264ee.s1.eu.hivemq.cloud";
     private final String username = "nguyenhaiyen";
     private final String password = "B21dccn129@";
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
 
     @Override
@@ -88,6 +97,9 @@ public class MqttDeviceStatusService implements CommandLineRunner {
             // Check the state and save accordingly
             if (state.equals("ON") || state.equals("OFF")) {
                 saveDeviceStatus(device, state); // Pass the uppercase state
+                String messageSend = "{\"device\":\"" + device + "\", \"action\":\"" + state + "\"}";
+                messagingTemplate.convertAndSend("/topic/deviceStatus", messageSend);
+                System.out.println("Device: " + device + " State: " + state);
             } else {
                 System.err.println("Invalid state received: " + state);
             }
@@ -110,7 +122,10 @@ public class MqttDeviceStatusService implements CommandLineRunner {
                 .time(now)
                 .timeStr(formattedTime);
 
+
+
         deviceStatusRepository.save(deviceStatus);
+
 //        System.out.println("Stored data in MongoDB: " + sensorData);
     }
 

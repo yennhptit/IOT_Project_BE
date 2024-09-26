@@ -17,6 +17,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 import static com.hivemq.client.mqtt.MqttGlobalPublishFilter.ALL;
 
@@ -25,8 +26,8 @@ public class MqttService implements CommandLineRunner {
 
     @Autowired
     private SensorDataRepository sensorDataRepository;
+    private final String host = "5268996a427b4742bc30f7ec3ea264ee.s1.eu.hivemq.cloud";
 
-    private final String host = "362ad76d24a14b5b9943c3bea23ab581.s1.eu.hivemq.cloud";
     private final String username = "nguyenhaiyen";
     private final String password = "B21dccn129@";
 
@@ -79,13 +80,16 @@ public class MqttService implements CommandLineRunner {
             int roundedLight = Math.round(light);
             long timestamp = json.get("timestamp").getAsLong();
 
-            saveSensorData(roundedTemperature, roundedHumidity, roundedLight);
+            Random random = new Random();
+            int wind = random.nextInt(101); // Tạo số ngẫu nhiên từ 0 đến 100
+
+            saveSensorData(roundedTemperature, roundedHumidity, roundedLight, wind);
         } catch (Exception e) {
             System.err.println("Error processing incoming message: " + e.getMessage());
         }
     }
 
-    private void saveSensorData(int temperature, int humidity, int light) {
+    private void saveSensorData(int temperature, int humidity, int light, int wind) {
 
         LocalDateTime now = LocalDateTime.now();
         // Định dạng thời gian
@@ -97,6 +101,7 @@ public class MqttService implements CommandLineRunner {
                 .temperature(temperature)
                 .humidity(humidity)
                 .light(light)
+                .wind(wind)
                 .timeStr(formattedTime)
                 .time(now);
 
