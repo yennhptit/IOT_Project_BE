@@ -22,4 +22,11 @@ public interface ActionHistoryRepository extends MongoRepository<ActionHistory, 
     @Query("{ 'wind': { $lt: ?0 }, 'time': { $gte: ?1, $lt: ?2 } }")
     long countWindLessThan(int windSpeed, LocalDate startDate, LocalDate endDate);
 
+
+
+    @Query("{ 'device': 'FAN', 'action': 'ON', 'time' : { $gte: ?0, $lt: ?1 } }")
+    List<ActionHistory> findFanOnByTime(LocalDateTime start, LocalDateTime end);
+
+
+    ActionHistory findTopByDeviceOrderByTimeDesc(String device);
 }

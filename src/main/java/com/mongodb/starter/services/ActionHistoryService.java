@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -63,4 +65,13 @@ public class ActionHistoryService {
 //        LocalDateTime endOfDay = date.plusDays(1).atStartOfDay(); // This gives you the start of the next day
 //        return actionHistoryRepository.countFanOnActions(startOfDay, endOfDay);
 //    }
+
+    public long countFanOnByDate(LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
+
+        List<ActionHistory> fanOnActions = actionHistoryRepository.findFanOnByTime(startOfDay, endOfDay);
+        return fanOnActions.size();
+    }
+
 }

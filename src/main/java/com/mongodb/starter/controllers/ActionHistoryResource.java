@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -355,5 +356,20 @@ public class ActionHistoryResource {
     public long getWindCount() {
         return actionHistoryService.countFanOnActionsToday();
     }
+    @GetMapping("/fan-on-count")
+    public long getFanOnCount(
+            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return actionHistoryService.countFanOnByDate(date);
+    }
 
+    @GetMapping("/latest-action-of-device")
+    public ResponseEntity<String> getLatestAction(@RequestParam String device) {
+        ActionHistory latestAction = actionHistoryRepository.findTopByDeviceOrderByTimeDesc(device);
+
+        if (latestAction != null) {
+            return ResponseEntity.ok(latestAction.getAction());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

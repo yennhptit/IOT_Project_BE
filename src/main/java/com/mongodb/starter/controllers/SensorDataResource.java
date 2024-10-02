@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -414,5 +415,11 @@ public class SensorDataResource {
     @GetMapping("/api/sensor/wind-count")
     public long getWindCount() {
         return sensorDataService.countWindLessThan40Today();
+    }
+
+    @GetMapping("/wind-count-lt-40")
+    public long getWindCount(
+            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return sensorDataService.countWindLessThan40ByDate(date);
     }
 }

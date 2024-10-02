@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.bson.Document; // For Document class if needed
 import com.mongodb.client.model.Filters;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -40,5 +42,13 @@ public class SensorDataService {
                         Filters.gte("time", startDate),
                         Filters.lt("time", endDate)
                 ));
+    }
+
+    public long countWindLessThan40ByDate(LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
+
+        List<SensorData> sensorDataList = sensorDataRepository.findByTimeAndWindLessThan(startOfDay, endOfDay);
+        return sensorDataList.size();
     }
 }

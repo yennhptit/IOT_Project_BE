@@ -21,8 +21,8 @@
 #define LUX_CALC_EXPONENT -1.405 // Số mũ tính toán lux
 
 // Thông tin kết nối WiFi và MQTT Broker
-const char* ssid = "TOTOLINK_N100RE";             // Thay bằng SSID của bạn
-const char* password = "0123456789";
+const char* ssid = "Yuu";             // Thay bằng SSID của bạn
+const char* password = "haiyennn";
 const char* mqtt_server = "5268996a427b4742bc30f7ec3ea264ee.s1.eu.hivemq.cloud";
 const char* mqtt_user = "nguyenhaiyen";
 const char* mqtt_pass = "B21dccn129@";

@@ -58,5 +58,12 @@ public interface SensorDataRepository extends MongoRepository<SensorData, String
     long countWindLessThanAndDateContains(int windSpeed, String date);
 
 
+    @Query("{ 'time' : { $gte: ?0, $lt: ?1 }, 'wind': { $lt: 40 } }")
+    List<SensorData> findByTimeAndWindLessThan(LocalDateTime start, LocalDateTime end);
+
+
+
+
+
 
 }
